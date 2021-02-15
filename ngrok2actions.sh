@@ -20,6 +20,7 @@ INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
 ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
 LOG_FILE='/tmp/ngrok.log'
 TELEGRAM_LOG="/tmp/telegram.log"
+WECHAT_LOG="/tmp/wechat.log"
 CONTINUE_FILE="/tmp/continue"
 
 if [[ -z "${NGROK_TOKEN}" ]]; then
