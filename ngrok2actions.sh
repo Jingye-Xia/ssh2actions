@@ -92,8 +92,13 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${RIQI}" -d "&desp=${MSG}" >/dev/null
-        sleep 10
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${RIQI}" -d "&desp=${MSG}" >${WECHAT_LOG}
+        WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
+        if [[ ${WECHAT_STATUS} != success ]]; then
+            echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
+        else
+            echo -e "${INFO} WeChat message sent successfully!"
+        fi
         echo -e "${INFO} Sending message to Telegram..."
         curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "disable_web_page_preview=true" \
