@@ -96,7 +96,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
             -d "parse_mode=Markdown" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "text=${MSG}" >${TELEGRAM_LOG}
-        curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${MSG}
+        curl https://sc.ftqq.com/${SCKEY}.send?text=${MSG}
         TELEGRAM_STATUS=$(cat ${TELEGRAM_LOG} | jq -r .ok)
         if [[ ${TELEGRAM_STATUS} != true ]]; then
             echo -e "${ERROR} Telegram message sending failed: $(cat ${TELEGRAM_LOG})"
