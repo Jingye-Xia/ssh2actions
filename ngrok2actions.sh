@@ -80,7 +80,7 @@ ERRORS_LOG=$(grep "command failed" ${LOG_FILE})
 
 if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
     SSH_CMD="$(grep -oE "tcp://(.+)" ${LOG_FILE} | sed "s/tcp:\/\//ssh ${USER}@/" | sed "s/:/ -p /")"
-    RIQI=$(date "+%Y%m%d-%H%M%S")
+    RIQI="$(date "+%Y%m%d-%H%M%S")"
     MSG="
 *GitHub Actions - ngrok session info:*
 
