@@ -91,7 +91,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -sSX POST "https://sc.ftqq.com/${SCKEY}.send?text=链接地址&desp='${SSH_CMD}'"  >/dev/null
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=链接地址test" -d "&desp=${SSH_CMD}"  >/dev/null
         sleep 10
         echo -e "${INFO} Sending message to Telegram..."
         curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
