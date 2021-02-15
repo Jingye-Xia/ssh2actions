@@ -90,13 +90,15 @@ if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
 Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
+        echo -e "${INFO} Sending message to WeChat..."
+        curl https://sc.ftqq.com/${SCKEY}.send?text=链接地址&desp=${MSG}
+        sleep 10
         echo -e "${INFO} Sending message to Telegram..."
         curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "disable_web_page_preview=true" \
             -d "parse_mode=Markdown" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "text=${MSG}" >${TELEGRAM_LOG}
-        curl https://sc.ftqq.com/${SCKEY}.send?text=链接地址&desp=${MSG}
         TELEGRAM_STATUS=$(cat ${TELEGRAM_LOG} | jq -r .ok)
         if [[ ${TELEGRAM_STATUS} != true ]]; then
             echo -e "${ERROR} Telegram message sending failed: $(cat ${TELEGRAM_LOG})"
