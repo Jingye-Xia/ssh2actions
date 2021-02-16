@@ -93,7 +93,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${SCKEY}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=你现在可以连接到Actions了，日期：${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
         WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
         if [[ ${WECHAT_STATUS} != success ]]; then
             echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
