@@ -47,7 +47,7 @@ tmate -S ${TMATE_SOCK} wait tmate-ready
 TMATE_SSH=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_ssh}')
 TMATE_WEB=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_web}')
 DATE="$(date "+%Y%m%d-%H%M%S")"
-TEXT="No$(date "+%Y%m%d-%H%M%S")Actions on standby"
+TEXT="No.$(date "+%Y%m%d-%H%M%S")等待连接"
 MSG="
 *GitHub Actions - tmate session info:*
 
@@ -63,7 +63,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 
 if [[ -n "${SCKEY}" ]]; then
     echo -e "${INFO} Sending message to WeChat..."
-    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
+    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${TEXT}" -d "&desp=${MSG}" >${WECHAT_LOG}
     WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
     if [[ ${WECHAT_STATUS} != success ]]; then
         echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
