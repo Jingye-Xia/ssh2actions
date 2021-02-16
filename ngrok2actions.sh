@@ -91,7 +91,7 @@ if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
 🔔 *TIPS:*
 Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
-    if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
+    if [[ -n "${SCKEY}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
         curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
         WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
@@ -100,6 +100,8 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
         else
             echo -e "${INFO} WeChat message sent successfully!"
         fi
+    fi
+    if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
         echo -e "${INFO} Sending message to Telegram..."
         curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "disable_web_page_preview=true" \

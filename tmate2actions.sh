@@ -21,6 +21,7 @@ INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
 ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
 TMATE_SOCK="/tmp/tmate.sock"
 TELEGRAM_LOG="/tmp/telegram.log"
+WECHAT_LOG="/tmp/wechat.log"
 CONTINUE_FILE="/tmp/continue"
 
 # Install tmate on macOS or Ubuntu
@@ -45,6 +46,7 @@ tmate -S ${TMATE_SOCK} wait tmate-ready
 # Print connection info
 TMATE_SSH=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_ssh}')
 TMATE_WEB=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_web}')
+DATE="$(date "+%Y%m%d-%H%M%S")"
 MSG="
 *GitHub Actions - tmate session info:*
 
@@ -58,6 +60,16 @@ ${TMATE_WEB}
 Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
 
+if [[ -n "${SCKEY}" ]]; then
+    echo -e "${INFO} Sending message to WeChat..."
+    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
+    WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
+    if [[ ${WECHAT_STATUS} != success ]]; then
+        echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
+    else
+        echo -e "${INFO} WeChat message sent successfully!"
+    fi
+fi
 if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
     echo -e "${INFO} Sending message to Telegram..."
     curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
