@@ -47,7 +47,7 @@ tmate -S ${TMATE_SOCK} wait tmate-ready
 TMATE_SSH=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_ssh}')
 TMATE_WEB=$(tmate -S ${TMATE_SOCK} display -p '#{tmate_web}')
 DATE="$(date "+%Y%m%d-%H%M%S")"
-TEXT="No.$(date "+%Y%m%d-%H%M%S")Actions on standby"
+TEXT="No$(date "+%Y%m%d-%H%M%S")Actions on standby"
 MSG="
 *GitHub Actions - tmate session info:*
 
