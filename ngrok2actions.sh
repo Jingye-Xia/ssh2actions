@@ -71,7 +71,7 @@ screen -dmS ngrok \
     --authtoken "${NGROK_TOKEN}" \
     --region "${NGROK_REGION:-us}"
 
-while ((${SECONDS_LEFT:=10} > 0)); do
+while ((${SECONDS_LEFT:=3} > 0)); do
     echo -e "${INFO} Please wait ${SECONDS_LEFT}s ..."
     sleep 1
     SECONDS_LEFT=$((${SECONDS_LEFT} - 1))
@@ -93,7 +93,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${SCKEY}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=No.${DATE}Actions on standby" -d "&desp=${MSG}" >${WECHAT_LOG}
         WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
         if [[ ${WECHAT_STATUS} != success ]]; then
             echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
