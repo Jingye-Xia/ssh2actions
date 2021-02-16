@@ -58,7 +58,7 @@ ${TMATE_WEB}
 
 🔔 *TIPS:*
 Run this to continue to the next step.
-\`touch ${CONTINUE_FILE}\*
+\`touch ${CONTINUE_FILE}\`
 
 *Actions run at:*
 \`${DATE}\`
