@@ -57,7 +57,8 @@ MSG="
 ${TMATE_WEB}
 
 🔔 *TIPS:*
-Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
+Run this to continue to the next step.
+\`touch ${CONTINUE_FILE}\*
 
 *Actions run at:*
 \`${DATE}\`
