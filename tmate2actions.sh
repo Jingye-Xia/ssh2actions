@@ -58,11 +58,15 @@ ${TMATE_WEB}
 
 🔔 *TIPS:*
 Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
+
+*Actions run at:*
+\`${DATE}\`
+
 "
 
 if [[ -n "${SCKEY}" ]]; then
     echo -e "${INFO} Sending message to WeChat..."
-    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=Actions等待连接……" -d "&desp=${MSG}时间：${DATE}" >${WECHAT_LOG}
+    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=Actions等待连接……" -d "&desp=${MSG}" >${WECHAT_LOG}
     WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
     if [[ ${WECHAT_STATUS} != success ]]; then
         echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
