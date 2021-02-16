@@ -81,7 +81,7 @@ ERRORS_LOG=$(grep "command failed" ${LOG_FILE})
 
 if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
     SSH_CMD="$(grep -oE "tcp://(.+)" ${LOG_FILE} | sed "s/tcp:\/\//ssh ${USER}@/" | sed "s/:/ -p /")"
-    RIQI="$(date "+%Y%m%d-%H%M%S")"
+    DATE="$(date "+%Y%m%d-%H%M%S")"
     MSG="
 *GitHub Actions - ngrok session info:*
 
@@ -93,7 +93,7 @@ Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
     if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${RIQI}" -d "&desp=${MSG}" >${WECHAT_LOG}
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=${DATE}" -d "&desp=${MSG}" >${WECHAT_LOG}
         WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
         if [[ ${WECHAT_STATUS} != success ]]; then
             echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
