@@ -89,11 +89,16 @@ if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
 \`${SSH_CMD}\`
 
 🔔 *TIPS:*
-Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
+*Run this to continue to the next step.*
+\`touch ${CONTINUE_FILE}\`
+
+*Actions run at:*
+\`${DATE}\`
+
 "
     if [[ -n "${SCKEY}" ]]; then
         echo -e "${INFO} Sending message to WeChat..."
-        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=No.${DATE}Actions on standby" -d "&desp=${MSG}" >${WECHAT_LOG}
+        curl -s "https://sc.ftqq.com/${SCKEY}.send?text=Actions等待连接" -d "&desp=${MSG}" >${WECHAT_LOG}
         WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
         if [[ ${WECHAT_STATUS} != success ]]; then
             echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
