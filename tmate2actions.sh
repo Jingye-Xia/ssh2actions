@@ -65,16 +65,16 @@ ${TMATE_WEB}
 
 "
 
-if [[ -n "${SCKEY}" ]]; then
-    echo -e "${INFO} Sending message to WeChat..."
-    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=Actions等待连接" -d "&desp=${MSG}" >${WECHAT_LOG}
-    WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
-    if [[ ${WECHAT_STATUS} != success ]]; then
-        echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
-    else
-        echo -e "${INFO} WeChat message sent successfully!"
-    fi
-fi
+#if [[ -n "${SCKEY}" ]]; then
+#    echo -e "${INFO} Sending message to WeChat..."
+#    curl -s "https://sc.ftqq.com/${SCKEY}.send?text=Actions等待连接" -d "&desp=${MSG}" >${WECHAT_LOG}
+#    WECHAT_STATUS=$(cat ${WECHAT_LOG} | jq -r .errmsg)
+#    if [[ ${WECHAT_STATUS} != success ]]; then
+#        echo -e "${ERROR} WeChat message sending failed: $(cat ${WECHAT_LOG})"
+#    else
+#        echo -e "${INFO} WeChat message sent successfully!"
+#    fi
+#fi
 if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
     echo -e "${INFO} Sending message to Telegram..."
     curl -sSX POST "${TELEGRAM_API_URL:-https://api.telegram.org}/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
